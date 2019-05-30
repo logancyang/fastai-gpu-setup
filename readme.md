@@ -341,4 +341,5 @@ Using `SSH` instead of `HTTPS` is another option. But when the computer has two 
 - https://course.fast.ai/start_aws.html
 - https://github.com/charlesq34/DIY-Deep-Learning-Workstation
 - https://fzhu.work/blog/python/remote-ipython-notebook-setup.html
+- https://tuatini.me/part-2-how-to-setup-your-own-environment-for-deep-learning-for-remote/
 - https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
