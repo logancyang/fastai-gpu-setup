@@ -336,10 +336,16 @@ Since I have 2FA authentication for my github account, using `https` as remote u
 
 Using `SSH` instead of `HTTPS` is another option. But when the computer has two or more github account, setting up more key pairs and making things work is just [too much](https://stackoverflow.com/questions/3860112/multiple-github-accounts-on-the-same-computer). Since I prefer using my MBP (the machine with multiple Github accounts) over the Linux box for coding, sticking with `HTTPS` for the mac.
 
+## Side Note: SSH Port Forwarding Concepts
+
+I'm a visual person. I found the answer [here](https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot) helpful for explaining different types of port forwarding.
+
 ## References
 
 - https://course.fast.ai/start_aws.html
 - https://github.com/charlesq34/DIY-Deep-Learning-Workstation
+- https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
+- https://superuser.com/questions/869417/port-forwarding-not-working-on-verizon-fios-router
 - https://fzhu.work/blog/python/remote-ipython-notebook-setup.html
 - https://tuatini.me/part-2-how-to-setup-your-own-environment-for-deep-learning-for-remote/
 - https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
