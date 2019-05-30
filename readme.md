@@ -330,9 +330,15 @@ ssh -fNL 8888:localhost:8888 deeplearningbox -p 2222
 
 Note that visit `https://localhost:8888` instead of `http` on the client computer.
 
+## Side Note: Github HTTPS
+
+Since I have 2FA authentication for my github account, using `https` as remote url for my repo needs "personal access token" which serves as password when pushing. Refer to [this](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line) for setup.
+
+Using `SSH` instead of `HTTPS` is another option. But when the computer has two or more github account, setting up more key pairs and making things work is just [too much](https://stackoverflow.com/questions/3860112/multiple-github-accounts-on-the-same-computer). Since I prefer using my MBP (the machine with multiple Github accounts) over the Linux box for coding, sticking with `HTTPS` for the mac.
 
 ## References
 
 - https://course.fast.ai/start_aws.html
 - https://github.com/charlesq34/DIY-Deep-Learning-Workstation
 - https://fzhu.work/blog/python/remote-ipython-notebook-setup.html
+- https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
