@@ -183,16 +183,6 @@ conda install -c fastai fastai
 
 Note that in Ubuntu terminal, use `ctrl+\` to stop the notebook server.
 
-## Port Forwarding to Acess Jupyter Notebook Remotely
-
-To access the Jupyter Notebook on the Linux GPU server from a client machine's browser, run
-
-```
-ssh -fNL 8888:local:8888 <username_on_server>@<server_ip>
-```
-
-and go to `localhost:8888/tree` in your browser.
-
 ## GPU vs. CPU for Deep Learning Test
 
 Try running this inside a Jupyter Notebook:
@@ -216,15 +206,78 @@ t_gpu = torch.rand(500,500,500).cuda()
 # 18.7 ms ± 376 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 ```
 
-If you would like to train anything meaningful in deep learning, a GPU is what you need - specifically an NVIDIA GPU.
+## Set up SSH connection
+Server side, install SSH server:
 
-## Why NVIDIA?
+```
+sudo apt-get install openssh-server
+```
 
-We recommend you to use an NVIDIA GPU since they are currently the best out there for a few reasons:
+Edit SSH configuration to whitelist users:
 
-- Currently the fastest
-- Native Pytorch support for CUDA
-- Highly optimized for deep learning with cuDNN
+```
+sudo vim /etc/ssh/sshd_config
+```
+
+Change root login permission line to: `PermitRootLogin no`
+
+Add allow users: `AllowUsers <your_username>`
+
+Then restart SSH server:
+
+```
+sudo /etc/init.d/ssh restart
+sudo ufw allow 22
+```
+
+Client side, to connect with the workstation, you need to firstly know the server's IP (or hostname if it has one). Use ifconfig -a on the server to check IP address (look for that in eth0).
+
+Client side (Mac OS), you need to whitelist the server IP in /etc/hosts:
+
+```
+sudo vim /etc/hosts
+```
+
+Add line `<server IP> <server hostname>`
+
+
+## Port Forwarding to Acess Jupyter Notebook (LAN)
+
+Within the home network, access the Jupyter Notebook on the Linux GPU server from a client machine's browser by running
+
+```
+ssh -fNL 8888:local:8888 <username_on_server>@<server_ip>
+```
+
+and go to `localhost:8888/tree` in your browser.
+
+
+## Setup Remote SSH Access (WAN/Internet)
+
+In my case, my Ubuntu machine with GPU sits at home behind a Verizon Fios router. I can directly ssh into it in my home network (LAN) but doing so from outside requires several additional steps.
+
+### Configure Router for Port Forwarding
+
+For Verison Fios routers, go to `192.168.1.1` to access the router setting. In my case, the username is `admin` and the password is printed on my router.
+
+In the page, find port forwarding, set `source` port to be `ANY`, `destination` port to be your custom port, say `2222`, and the port forward to is `22` which is the port on the box at which `ssh` is listening. Then click add. Done!
+
+### SSH from Remote
+
+Now, to log onto the box from outside, run
+
+```
+ssh <username>@<your_router_ip> -p 2222
+```
+
+To simplify this, add a blob in `~/.ssh/config`.
+
+
+## Setup Jupyter Notebook Server Remote Access
+
+TBD
+
+
 
 ## References
 
