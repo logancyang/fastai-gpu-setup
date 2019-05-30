@@ -272,14 +272,67 @@ ssh <username>@<your_router_ip> -p 2222
 
 To simplify this, add a blob in `~/.ssh/config`.
 
+```
+Host deeplearningbox
+    HostName <router_public_ip>
+    User <username_on_deeplearningbox>
+```
 
-## Setup Jupyter Notebook Server Remote Access
+Now you can run `ssh deeplearningbox -p 2222`
 
-TBD
+## Setup Jupyter Notebook Server for Remote Access
 
+With remote ssh setup, now we setup Jupyter Notebook.
+
+```
+jupyter notebook --generate-config
+```
+
+which will generate `jupyter_notebook_config.py` in `~/.jupyter`.
+
+Then generate certfile and key as:
+
+```
+$ cd ~/.jupyter
+$ openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mykey.key -out mycert.pem
+```
+
+Launch Python and run the following lines:
+
+```
+In [1]: from notebook.auth import passwd
+In [2]: passwd()
+Enter password:
+Verify password:
+Out[2]: 'sha1:67c9e60bb8b6:9ffede0825894254b2e042ea597d771089e11aed'
+```
+
+After that, edit the `jupyter_notebook_config.py` as following:
+
+```
+c.NotebookApp.password = u'sha1:67c9e60bb8b6:9ffede0825894254b2e042ea597d771089e11aed'
+# Set options for certfile, ip, password, and toggle off browser auto-opening
+c.NotebookApp.certfile = u'/absolute/path/to/your/certificate/mycert.pem'
+c.NotebookApp.keyfile = u'/absolute/path/to/your/certificate/mykey.key'
+
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.open_browser = False
+
+# It is a good idea to set a known, fixed port for server access
+c.NotebookApp.port = 8888
+```
+
+Now, start `jupyter notebook` on the deep learning workstation and log in by
+
+```
+ssh -fNL 8888:localhost:8888 deeplearningbox -p 2222
+```
+
+Note that visit `https://localhost:8888` instead of `http` on the client computer.
 
 
 ## References
 
 - https://course.fast.ai/start_aws.html
 - https://github.com/charlesq34/DIY-Deep-Learning-Workstation
+- https://fzhu.work/blog/python/remote-ipython-notebook-setup.html
