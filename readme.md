@@ -84,6 +84,21 @@ nvidia-smi
 nvcc --version
 ```
 
+Note: Haven't been using my gpu server for a while and when I started Ubuntu in Jan 2020, the NVidia driver stopped working. First of all, the display resolution was messed up and I had to perform actions from my other machine via ssh. I had to update the driver but there were some hoops to jump through. There were some broken dependencies and I needed
+
+```
+sudo aptitude install <name_of_package_with_conflicts>
+```
+
+to be able to run
+
+```
+sudo ubuntu-drivers autoinstall
+```
+
+reference: https://askubuntu.com/questions/1077493/unable-to-install-nvidia-drivers-on-ubuntu-18-04
+
+
 ## Server Setup: Conda
 
 Install Anaconda
